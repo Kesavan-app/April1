@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gift page 1</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: #fdf1f8;
+            color: #3a1f3f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 32px;
+            background: radial-gradient(circle at top left, rgba(255, 216, 238, 0.95), transparent 36%),
+                        radial-gradient(circle at bottom right, rgba(182, 142, 206, 0.18), transparent 28%),
+                        linear-gradient(180deg, #fff6fb 0%, #f7e7f4 42%, #f8e4f4 100%);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 25% 20%, rgba(255, 199, 235, 0.45), transparent 22%),
+                        radial-gradient(circle at 80% 15%, rgba(237, 182, 240, 0.22), transparent 16%),
+                        radial-gradient(circle at 60% 80%, rgba(233, 151, 211, 0.16), transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .quiz-card {
+            position: relative;
+            width: min(640px, 100%);
+            padding: 44px 38px;
+            border-radius: 42px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 40px 120px rgba(142, 78, 143, 0.14);
+            backdrop-filter: blur(18px);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .quiz-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.7), transparent 22%);
+            pointer-events: none;
+        }
+
+        .quiz-card h1 {
+            margin: 0 0 14px;
+            font-size: clamp(2.4rem, 4vw, 3.4rem);
+            color: #7e2e72;
+            letter-spacing: -0.04em;
+            text-shadow: 0 8px 20px rgba(124, 62, 108, 0.12);
+        }
+
+        .quiz-card p {
+            margin: 20px auto 30px;
+            max-width: 640px;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: #5a3352;
+        }
+
+        .options {
+            display: grid;
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .options button,
+        #next-button {
+            width: 100%;
+            border: none;
+            border-radius: 999px;
+            padding: 16px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+            box-shadow: 0 18px 35px rgba(129, 64, 134, 0.14);
+        }
+
+        .options button {
+            background: linear-gradient(180deg, #fff5fb 0%, #f5e2ee 100%);
+            color: #5e3755;
+            border: 1px solid rgba(222, 192, 206, 0.85);
+        }
+
+        .options button:hover,
+        #next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 24px 42px rgba(129, 64, 134, 0.2);
+        }
+
+        .options button:disabled {
+            opacity: 0.55;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        #next-button {
+            display: none;
+            margin: 0 auto;
+            max-width: 220px;
+            background: linear-gradient(135deg, #d14a95 0%, #7d4fbf 100%);
+            color: #fff;
+            text-transform: uppercase;
+            text-align: center;
+            padding-top: 22px;
+        }
+
+        #next-button.show {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 620px) {
+            body {
+                padding: 24px;
+            }
+
+            .quiz-card {
+                padding: 32px 24px;
+                border-radius: 32px;
+            }
+
+            .quiz-card h1 {
+                font-size: 2.2rem;
+            }
+
+            .options button,
+            #next-button {
+                padding: 14px 18px;
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <h1>Quiz for My Love</h1>
+        <p id="quiz-text">Ready for a sweet quiz? Answer the questions one by one and see your special message at the end.</p>
+        <div class="options" id="quiz-options"></div>
+        <button id="next-button">Next</button>
+    </div>
+
+    <script>
+        const quizSteps = [
+            {
+                question: 'What is our favorite food restaurant?',
+                options: ['Grand in', 'Fayaz', 'bilal']
+            },
+            {
+                question: 'What is our favorite food?',
+                options: ['biryani + thanduri', 'pizza', 'fried rice']
+            },
+            {
+                question: 'When did you propose to me?',
+                options: ['April 1st', 'Feb 10th', 'April 24th']
+            }
+        ];
+
+        let currentStep = 0;
+        const quizText = document.getElementById('quiz-text');
+        const quizOptions = document.getElementById('quiz-options');
+        const nextButton = document.getElementById('next-button');
+        const answers = [];
+
+        function renderStep() {
+            const step = quizSteps[currentStep];
+            quizText.textContent = step.question;
+            quizOptions.innerHTML = '';
+            nextButton.classList.remove('show');
+
+            step.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.type = 'button';
+                button.addEventListener('click', () => selectAnswer(option, button));
+                quizOptions.appendChild(button);
+            });
+        }
+
+        function selectAnswer(option, button) {
+            answers[currentStep] = option;
+            Array.from(quizOptions.children).forEach(btn => btn.disabled = false);
+            button.disabled = true;
+            nextButton.classList.add('show');
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentStep += 1;
+            if (currentStep < quizSteps.length) {
+                renderStep();
+            } else {
+                showResult();
+            }
+        });
+
+        function showResult() {
+            quizText.textContent = 'You completed the quiz!';
+            quizOptions.innerHTML = '<p style="font-size:1.05rem; color:#6a2f4f;">Your answers show how much love and connection we share. You make every moment special, and I cherish you more every day.</p>';
+            nextButton.classList.remove('show');
+        }
+
+        renderStep();
+    </script>
+</body>
+</html>

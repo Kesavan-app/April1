@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gifts</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: #fff5fb;
+            color: #3d2e4f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 24px;
+            background: radial-gradient(circle at top left, #ffe9f8 0%, #f8edff 32%, #fbeafa 70%, #fff8fb 100%);
+        }
+
+        .page-shell {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            position: relative;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            border-radius: 42px;
+            box-shadow: 0 40px 110px rgba(150, 76, 154, 0.14);
+            backdrop-filter: blur(22px);
+            padding: 48px 44px 42px;
+            margin-bottom: 38px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.4), transparent 20%), radial-gradient(circle at bottom left, rgba(229, 121, 185, 0.14), transparent 25%);
+            pointer-events: none;
+            border-radius: 42px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            right: -60px;
+            top: -60px;
+            width: 178px;
+            height: 178px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            filter: blur(24px);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255, 250, 255, 0.92), rgba(252, 224, 245, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            color: #8c3d82;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            box-shadow: 0 14px 28px rgba(151, 77, 152, 0.12);
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .hero-heading {
+            margin: 0;
+            font-size: clamp(2.8rem, 5vw, 3.8rem);
+            line-height: 0.98;
+            color: #6b2f7c;
+            letter-spacing: -0.05em;
+            text-shadow: 0 10px 26px rgba(107, 47, 124, 0.14);
+        }
+
+        .hero-subtitle {
+            margin: 0;
+            color: #7f4f83;
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .hero-text {
+            margin: 0 auto;
+            max-width: 760px;
+            font-size: 1.08rem;
+            line-height: 1.95;
+            color: #4d3a55;
+        }
+
+        .hero-text strong {
+            color: #7f3d85;
+        }
+
+        .cards-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(249, 240, 252, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 28px 80px rgba(146, 72, 149, 0.12);
+            overflow: hidden;
+            transition: transform 0.32s ease, box-shadow 0.32s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 42px 110px rgba(146, 72, 149, 0.18);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.55), transparent 30%);
+            pointer-events: none;
+        }
+
+        .card-header {
+            padding: 28px 24px 0;
+            text-align: center;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.45rem;
+            color: #51305f;
+        }
+
+        .card-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 24px;
+            margin: 18px auto 0;
+            max-width: 260px;
+            box-shadow: 0 20px 48px rgba(130, 68, 138, 0.14);
+        }
+
+        .card-body {
+            padding: 22px 24px 28px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .card-text {
+            margin: 0;
+            color: #6b4b79;
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px 0;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, #d6439e 0%, #7e4bc5 100%);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 18px 40px rgba(134, 61, 137, 0.18);
+        }
+
+        .card-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 58px rgba(134, 61, 137, 0.24);
+        }
+
+        @media (max-width: 860px) {
+            body {
+                padding: 30px 18px;
+            }
+
+            .hero {
+                padding: 36px 28px 32px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .hero-heading {
+                font-size: 2.4rem;
+            }
+
+            .hero-text {
+                font-size: 1rem;
+            }
+
+            .card {
+                border-radius: 24px;
+            }
+
+            .card-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Something Special for You</h1>
+        <p>I have prepared a special surprise for you. I hope you will love it as much as I love you. You deserve all the happiness in the world, and I want to make sure you feel loved and appreciated every day.</p>
+    </div>
+    <div class="cards-row">
+        <div class="card">
+            <center>
+                <h2>Gift One</h2>
+                <img style="width: 25%; height: auto; border-radius: 8px;" src="https://c.tenor.com/KhmKiaOoawgAAAAC/panda.gif" alt="Gift Image">
+            </center>
+            <center>
+                <button class="card-button" onclick="window.location.href='gfpg1.html'">See Me</button>
+            </center>
+        </div>
+        <div class="card">
+            <center>
+                <h2>Gift Two</h2>
+                <img style="width: 25%; height: auto; border-radius: 8px;" src="https://i.pinimg.com/originals/eb/83/a8/eb83a8fe49349f55a2e6cf8da77f7670.gif" alt="Gift Image">
+            </center>
+            <center>
+                <button class="card-button" onclick="window.location.href='gfpg2.html'">Open</button>
+            </center>
+        </div>
+        <div class="card">
+            <center>
+                <h2>Gift Three</h2>
+                <img style="width: 25%; height: auto; border-radius: 8px;" src="https://media.tenor.com/e4ys-kzKq_0AAAAM/love.gif" alt="Gift Image">
+            </center>
+            <center>
+                <button class="card-button" onclick="window.location.href='gfpg3.html'">Open Last</button>
+            </center>
+        </div>
+    </div>
+    <button class="card-button" style="margin: 40px auto 0; display: block;" onclick="window.location.href='final.html'">Finally</button>
+</body>
+</html>
